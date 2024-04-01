@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bno2r73frhjbb"]
+
+[ext_resource type="Script" path="res://HUMANO.gd" id="1_ybekb"]
+
+[node name="HUMANO" type="CharacterBody2D"]
+position = Vector2(-6, -252)
+script = ExtResource("1_ybekb")

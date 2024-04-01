@@ -1,0 +1,147 @@
+[gd_scene load_steps=16 format=3 uid="uid://d1ppcdek6ri08"]
+
+[ext_resource type="Texture2D" uid="uid://pxgn1srhmrlx" path="res://ASSETS/CIELO.png" id="1_041kt"]
+[ext_resource type="Texture2D" uid="uid://bu1dvyvtnm6bj" path="res://ASSETS/mantener-verde-el-pasto-hans.jpg" id="2_53r3q"]
+[ext_resource type="Script" path="res://HUMANO.gd" id="3_p220p"]
+[ext_resource type="Texture2D" uid="uid://daatpvvcbe1as" path="res://ASSETS/HUMANO.png" id="4_wew1s"]
+[ext_resource type="PackedScene" uid="uid://b425e0kjn0i1s" path="res://BALA.tscn" id="5_hqbdm"]
+[ext_resource type="Texture2D" uid="uid://cpn5utx6q88wj" path="res://ASSETS/ARBOL.png" id="5_jfhmw"]
+[ext_resource type="Script" path="res://BALA.gd" id="7_wuara"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_apqq4"]
+size = Vector2(3807, 1197)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3dig"]
+size = Vector2(808.5, 2341)
+
+[sub_resource type="Animation" id="Animation_u62gn"]
+resource_name = "HUMANO ANIMACION"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_fkd6x"]
+resource_name = "HUMANO ATAQUE ANIMACION"
+length = 1.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [2, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_n286d"]
+resource_name = "HUMANO SALTO ANIMACION"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_3jvk6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lja0w"]
+_data = {
+"HUMANO ANIMACION": SubResource("Animation_u62gn"),
+"HUMANO ATAQUE ANIMACION": SubResource("Animation_fkd6x"),
+"HUMANO SALTO ANIMACION": SubResource("Animation_n286d"),
+"RESET": SubResource("Animation_3jvk6")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i64vc"]
+size = Vector2(114, 353.063)
+
+[node name="MUNDO" type="Node2D"]
+
+[node name="MUNDO" type="StaticBody2D" parent="."]
+
+[node name="COLISION 1" type="CollisionShape2D" parent="MUNDO"]
+position = Vector2(-67.5, 548.5)
+shape = SubResource("RectangleShape2D_apqq4")
+
+[node name="COLISION 2" type="CollisionShape2D" parent="MUNDO"]
+position = Vector2(-1576.25, -1127.5)
+shape = SubResource("RectangleShape2D_o3dig")
+
+[node name="COLISION 3" type="CollisionShape2D" parent="MUNDO"]
+position = Vector2(1459, -1140)
+shape = SubResource("RectangleShape2D_o3dig")
+
+[node name="CIELO" type="Sprite2D" parent="MUNDO"]
+position = Vector2(977, 491)
+scale = Vector2(11.2914, 12.124)
+texture = ExtResource("1_041kt")
+
+[node name="PASTO" type="Sprite2D" parent="MUNDO"]
+position = Vector2(-59, 543)
+scale = Vector2(5.16848, 2.28817)
+texture = ExtResource("2_53r3q")
+
+[node name="ARBOL 1" type="Sprite2D" parent="MUNDO"]
+position = Vector2(-1267, -665)
+scale = Vector2(2.70753, 3.30903)
+texture = ExtResource("5_jfhmw")
+
+[node name="ARBOL 2" type="Sprite2D" parent="MUNDO"]
+position = Vector2(1216, -673)
+scale = Vector2(2.70753, 3.30903)
+texture = ExtResource("5_jfhmw")
+
+[node name="BALA" parent="MUNDO" instance=ExtResource("5_hqbdm")]
+script = ExtResource("7_wuara")
+
+[node name="HUMANO" type="CharacterBody2D" parent="MUNDO"]
+position = Vector2(-6, -252)
+script = ExtResource("3_p220p")
+
+[node name="HUMANO SPRITE" type="Sprite2D" parent="MUNDO/HUMANO"]
+position = Vector2(2, 1)
+texture = ExtResource("4_wew1s")
+hframes = 4
+
+[node name="ANIMACION" type="AnimationPlayer" parent="MUNDO/HUMANO/HUMANO SPRITE"]
+libraries = {
+"": SubResource("AnimationLibrary_lja0w")
+}
+
+[node name="COLISION" type="CollisionShape2D" parent="MUNDO/HUMANO"]
+position = Vector2(-4, -6)
+shape = SubResource("RectangleShape2D_i64vc")
+
+[node name="CAMARA" type="Camera2D" parent="MUNDO/HUMANO"]

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b425e0kjn0i1s"]
+
+[ext_resource type="Texture2D" uid="uid://blo37p5on5a6k" path="res://ASSETS/BALA.png" id="2_8uw0h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fyfte"]
+size = Vector2(191.5, 45.5)
+
+[node name="BALA" type="Node2D"]
+
+[node name="BALA STATIC BODY" type="StaticBody2D" parent="."]
+
+[node name="BALA SPRITE" type="Sprite2D" parent="BALA STATIC BODY"]
+texture = ExtResource("2_8uw0h")
+
+[node name="COLISION DE BALA" type="CollisionShape2D" parent="BALA STATIC BODY"]
+position = Vector2(-12, -6)
+shape = SubResource("RectangleShape2D_fyfte")
